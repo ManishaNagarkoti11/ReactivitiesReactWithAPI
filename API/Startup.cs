@@ -35,7 +35,13 @@ namespace API
             {
                 options.UseSqlServer(_config.GetConnectionString("DefaultConnection"));
             });
-            // In production, the React files will be served from this directory
+            services.AddCors(option=>{
+                option.AddPolicy("CorsPolicy",policy=>{
+                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3001"
+                        , "http://localhost:3000");
+                });
+            });
+            services.AddMvc();  // In production, the React files will be served from this directory
             //services.AddSpaStaticFiles(configuration =>
             //{
             //    configuration.RootPath = "ClientApp/build";
@@ -61,7 +67,8 @@ namespace API
             //app.UseSpaStaticFiles();
 
             app.UseRouting();
-
+            app.UseCors("CorsPolicy");
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
