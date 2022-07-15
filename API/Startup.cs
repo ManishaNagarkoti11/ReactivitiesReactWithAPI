@@ -38,7 +38,7 @@ namespace API
             services.AddCors(option=>{
                 option.AddPolicy("CorsPolicy",policy=>{
                     policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3001"
-                        , "http://localhost:3000");
+                        , "http://localhost:3000", "http://localhost:3002");
                 });
             });
             services.AddMvc();  // In production, the React files will be served from this directory
